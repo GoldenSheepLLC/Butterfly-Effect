@@ -1,7 +1,8 @@
 {
   "dependencies": {
-    "com.kokowolo.proceduralmesh": "https://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@github.com/Kokowolo/Package-Procedural-Mesh.git",
-    "com.kokowolo.utilities": "https://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@github.com/Kokowolo/Package-Utilities.git",
+    "com.kokowolo.proceduralmesh": "https://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@github.com/Kokowolo/Package-Procedural-Mesh.git",
+    "com.kokowolo.utilities": "https://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@github.com/Kokowolo/Package-Utilities.git",
+    "com.kokowolo.vfx": "https://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@github.com/Kokowolo/Package-VFX.git",
     "com.unity.cinemachine": "2.8.4",
     "com.unity.collab-proxy": "1.15.16",
     "com.unity.ide.rider": "3.0.13",

@@ -1903,7 +1903,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &752350438
 MonoBehaviour:
@@ -1944,6 +1944,12 @@ MonoBehaviour:
     type: 3}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
+--- !u!20 &792469516 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 824794784531804574, guid: c998e93a587b549319fb650b56c68c6c,
+    type: 3}
+  m_PrefabInstance: {fileID: 280530771}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &798000118 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6350958376621086967, guid: 3c57ac3cd7ff149dc85d3b77d6a0c34f,
@@ -2822,12 +2828,6 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!20 &1283837744 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 5550200978086791769, guid: c998e93a587b549319fb650b56c68c6c,
-    type: 3}
-  m_PrefabInstance: {fileID: 280530771}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1292862678
 GameObject:
   m_ObjectHideFlags: 0
@@ -3032,6 +3032,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 5927016312169518563}
+  targetPosition: {x: 0, y: 0, z: 0}
   distance: 15
   focusRadius: 5
   focusCentering: 0.5
@@ -4539,7 +4540,7 @@ PrefabInstance:
         type: 3}
       propertyPath: mainCamera
       value: 
-      objectReference: {fileID: 1283837744}
+      objectReference: {fileID: 792469516}
     - target: {fileID: 6350958376621086967, guid: 3c57ac3cd7ff149dc85d3b77d6a0c34f,
         type: 3}
       propertyPath: radius
@@ -5675,7 +5676,7 @@ PrefabInstance:
         type: 3}
       propertyPath: mainCamera
       value: 
-      objectReference: {fileID: 1283837744}
+      objectReference: {fileID: 792469516}
     - target: {fileID: 6350958376621086967, guid: 3c57ac3cd7ff149dc85d3b77d6a0c34f,
         type: 3}
       propertyPath: target
@@ -5721,7 +5722,7 @@ MonoBehaviour:
   maxSpeed: 0.3
   maxAcceleration: 4
   rotationSpeed: 10
-  orbitCamera: {fileID: 1283837744}
+  orbitCamera: {fileID: 792469516}
   carCamera: {fileID: 1342492285}
 --- !u!33 &6500177243994332072
 MeshFilter:

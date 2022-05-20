@@ -61,5 +61,5 @@ sysinfo.txt
 *.DS_Store
 
 # Project Specific Files
-
+/[Aa]ssets/[Aa]sset\ Store/
 

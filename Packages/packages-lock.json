@@ -1,14 +1,14 @@
 {
   "dependencies": {
     "com.kokowolo.proceduralmesh": {
-      "version": "https://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@github.com/Kokowolo/Package-Procedural-Mesh.git",
+      "version": "https://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@github.com/Kokowolo/Package-Procedural-Mesh.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "f78c2dc159b63a38d465a42fd8702d6253709bd8"
+      "hash": "170f2b3176db9e495b2bbb212719d93f10ece553"
     },
     "com.kokowolo.utilities": {
-      "version": "https://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@github.com/Kokowolo/Package-Utilities.git",
+      "version": "https://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@github.com/Kokowolo/Package-Utilities.git",
       "depth": 0,
       "source": "git",
       "dependencies": {
@@ -16,7 +16,14 @@
         "com.unity.inputsystem": "1.3.0",
         "com.unity.textmeshpro": "3.0.6"
       },
-      "hash": "362971a0297e3687a84413270c02468db7d331bb"
+      "hash": "4dc29809064671ce767041df80674d5c2e84f00a"
+    },
+    "com.kokowolo.vfx": {
+      "version": "https://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@github.com/Kokowolo/Package-VFX.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "124d16f0bbd87b8541e01413d4d12d89746a0b6d"
     },
     "com.unity.burst": {
       "version": "1.6.5",
