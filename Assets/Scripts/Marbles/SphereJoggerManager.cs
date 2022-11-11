@@ -17,9 +17,11 @@ public class SphereJoggerManager : MonoBehaviour
     [SerializeField] SphereJogger sphereJoggerPrefab = null;
     [SerializeField] WorldSpaceDisplay worldSpaceDisplay = null;
     [SerializeField] GameObject laserEnd = null;
-    [SerializeField] TextAsset followerDataTextAsset = null;
+    [SerializeField] TextAsset twitterFollowerDataTextAsset = null;
+    [SerializeField] TextAsset instagramFollowerDataTextAsset = null;
 
     [Header("Settings")]
+    [SerializeField] bool readTwitterData;
     [SerializeField, Range(0, 1)] float laserSize = 0.01f;
     [SerializeField, Range(0, 10)] float laserWaitTime = 0.2f;
     // [SerializeField, Range(0, 100)] float laserSpeed = 20f;
@@ -60,7 +62,8 @@ public class SphereJoggerManager : MonoBehaviour
 
         lineRenderer.positionCount = 2;
 
-        ReadFollowerData();
+        if (readTwitterData) ReadTwitterFollowerData();
+        else ReadInstagramFollowerData();
 
         Vector3 position;
         Quaternion rotation;
@@ -97,11 +100,6 @@ public class SphereJoggerManager : MonoBehaviour
     private void LateUpdate()
     {
         if (Time.time > sphereCooldownTime) UpdateSphereRadius();
-    }
-
-    private void OnDestroy()
-    {
-        Singleton<SphereJoggerManager>.Release();
     }
 
     #endregion
@@ -143,7 +141,8 @@ public class SphereJoggerManager : MonoBehaviour
 
             if (!Physics.SphereCast(hit.point, 2 * laserSize, hit.normal, out hit, laserLayerMask)) return;
 
-            if (hit.collider.TryGetComponent<SphereJogger>(out SphereJogger sphereJogger)) 
+            SphereJogger sphereJogger = hit.transform.GetComponentInParent<SphereJogger>();
+            if (sphereJogger) 
             {
                 destination = sphereJogger.transform.position;
                 HandleJoggerDeath(sphereJogger);
@@ -168,8 +167,8 @@ public class SphereJoggerManager : MonoBehaviour
 
         if (sphereMesh.radius > -1) return;
         
-        sphereMesh.radius += sphereSpeed;// * Time.deltaTime;
-        sphereMesh.Refresh();
+        sphereMesh.transform.localScale *= sphereSpeed;// * Time.deltaTime;
+        // sphereMesh.Refresh();
     }
 
     private void SwitchOrbitCameraTarget()
@@ -194,7 +193,7 @@ public class SphereJoggerManager : MonoBehaviour
         sphereJoggers.Remove(jogger);
         worldSpaceDisplay.SetText($"{sphereJoggers.Count}");
 
-        if (sphereJoggers.Count < 6)
+        if (sphereJoggers.Count < 10)
         {
             jogger.Win(sphereJoggers.Count);
             if (sphereJoggers.Count == 1)
@@ -216,18 +215,16 @@ public class SphereJoggerManager : MonoBehaviour
         }
     }
 
-    private void ReadFollowerData()
+    private void ReadTwitterFollowerData()
     {
         bool foundFollower = false;
-        StreamReader reader = new StreamReader(new MemoryStream(followerDataTextAsset.bytes)); 
+        StreamReader reader = new StreamReader(new MemoryStream(twitterFollowerDataTextAsset.bytes)); 
         while(!reader.EndOfStream)
         {
             string line = reader.ReadLine();
             if (line.Length != 0 && line[0] == '@') 
             {
-                string follower = "";
-                for (int i = 1; i < line.Length && i != ' '; i++) follower += line[i];
-                followers.Add(follower);
+                followers.Add(ReadWord(line, startIndex: 1));
                 foundFollower = true;
             }
             else if (foundFollower)
@@ -245,6 +242,30 @@ public class SphereJoggerManager : MonoBehaviour
             
         }
         reader.Close();
+    }
+
+    private void ReadInstagramFollowerData()
+    {
+        StreamReader reader = new StreamReader(new MemoryStream(instagramFollowerDataTextAsset.bytes)); 
+        while(!reader.EndOfStream)
+        {
+            string line = reader.ReadLine();
+            if (line.Contains("username"))
+            {
+                int startIndex = line.IndexOf(":") + 3;
+                followers.Add(ReadWord(line, startIndex));
+            }
+            
+        }
+        reader.Close();
+    }
+
+    private string ReadWord(string line, int startIndex)
+    {
+        string blacklist = " \"";
+        string word = "";
+        for (int i = startIndex; i < line.Length && !blacklist.Contains(line[i]); i++) word += line[i];
+        return word;
     }
 
     #endregion

@@ -8,10 +8,14 @@ public class SphereJogger : MonoBehaviour
     /************************************************************/
     #region Fields
 
+    [SerializeField] List<GameObject> hatPrefabs = new List<GameObject>();
     [SerializeField] GameObject body = null;
+    [SerializeField] Transform hatTransform = null;
+    [SerializeField] Collider collider = null;
     [SerializeField] GameObject nameTag = null;
     [SerializeField] GameObject deathParticleSystem = null;
     [SerializeField] Transform _orbitCameraAnchor = null;
+    [SerializeField] Animator animator;
     [SerializeField] RuntimeAnimatorController winAnimatorController = null;
     [SerializeField] RuntimeAnimatorController loseAnimatorController = null;
 
@@ -30,6 +34,21 @@ public class SphereJogger : MonoBehaviour
     #endregion
     /************************************************************/
     #region Functions
+
+    private void Awake() 
+    {
+        animator.Play("Bounce", -1, Random.Range(0.0f, 1.0f));
+
+        GameObject hat = Instantiate(
+            hatPrefabs[Random.Range(0, hatPrefabs.Count)], 
+            hatTransform.position,
+            hatTransform.rotation,
+            hatTransform);
+        
+        Color color = Kokowolo.Utilities.Math.GetRandomColor();
+        GetComponentInChildren<MeshRenderer>().material.color = color;
+        hat.GetComponentInChildren<MeshRenderer>().material.color = color;
+    }
 
     private void Update()
     {
@@ -65,9 +84,8 @@ public class SphereJogger : MonoBehaviour
         body.SetActive(false);
         nameTag.SetActive(false);
         deathParticleSystem.SetActive(true);
-        GetComponent<CapsuleCollider>().enabled = false;
-        Animator animator = GetComponent<Animator>();
-        animator.runtimeAnimatorController = null;
+        collider.enabled = false;
+        // animator.runtimeAnimatorController = null;
         enabled = false;
 
         string text = Name;
@@ -79,16 +97,15 @@ public class SphereJogger : MonoBehaviour
     {
         deathParticleSystem.transform.parent = null;
         deathParticleSystem.SetActive(true);
-        GetComponent<CapsuleCollider>().enabled = false;
+        collider.enabled = false;
         
-        Animator animator = GetComponent<Animator>();
-        animator.runtimeAnimatorController = (place == 0) ? winAnimatorController : loseAnimatorController;
+        // animator.runtimeAnimatorController = (place == 0) ? winAnimatorController : loseAnimatorController;
         enabled = false;
 
         string text = Name;
         FindObjectOfType<KillFeedDisplay>().Spawn(Name);
 
-        transform.position = new Vector3(999, -0.1f * place, -place);
+        transform.position = new Vector3(999, -0.15f * place, -place);
         transform.rotation = Quaternion.Euler(0, 90, 0);
     }
 
